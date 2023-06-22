@@ -29,14 +29,20 @@ class NoteItem extends StatelessWidget {
                 note.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .apply(color: darkgrey),
               ),
               const SizedBox(height: 8),
               Text(
                 note.content,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .apply(color: darkgrey),
               ),
             ],
           ),

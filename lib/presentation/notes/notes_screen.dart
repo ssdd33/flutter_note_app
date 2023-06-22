@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_note_app/domain/util/note_order.dart';
 import 'package:flutter_note_app/presentation/add_edit_note/add_edit_note_screnn.dart';
 import 'package:flutter_note_app/presentation/notes/compenents/note_item.dart';
+import 'package:flutter_note_app/presentation/notes/compenents/order_section.dart';
 import 'package:flutter_note_app/presentation/notes/notes_event.dart';
 import 'package:flutter_note_app/presentation/notes/notes_view_model.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +28,14 @@ class NotesScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: ListView(
-          children: state.notes
+        child: ListView(children: [
+          OrderSection(
+            noteOrder: state.noteOrder,
+            onOrderChanged: (NoteOrder noteOrder) {
+              viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
+            },
+          ),
+          ...state.notes
               .map((note) => GestureDetector(
                     onTap: () async {
                       bool? isSaved = await Navigator.push(
@@ -61,7 +69,7 @@ class NotesScreen extends StatelessWidget {
                     ),
                   ))
               .toList(),
-        ),
+        ]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

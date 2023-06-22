@@ -18,14 +18,18 @@ class NotesViewModel with ChangeNotifier {
 
   void onEvent(NotesEvent event) {
     event.when(
-      changeOrder: (NoteOrder noteOrder) {
-        _state = _state.copyWith(noteOrder: noteOrder);
-        _loadNotes();
-      },
-      loadNotes: _loadNotes,
-      deleteNote: _deleteNotes,
-      restoreNote: _restoreNote,
-    );
+        changeOrder: (NoteOrder noteOrder) {
+          _state = _state.copyWith(noteOrder: noteOrder);
+          _loadNotes();
+        },
+        loadNotes: _loadNotes,
+        deleteNote: _deleteNotes,
+        restoreNote: _restoreNote,
+        toggleOrderSection: () {
+          _state = _state.copyWith(
+              isOrderSectionVisible: !state.isOrderSectionVisible);
+          notifyListeners();
+        });
   }
 
   Future<void> _loadNotes() async {

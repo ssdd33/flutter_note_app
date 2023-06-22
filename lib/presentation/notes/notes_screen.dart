@@ -21,19 +21,29 @@ class NotesScreen extends StatelessWidget {
           'your note',
           style: TextStyle(fontSize: 30),
         ),
-        actions: const [
-          Icon(Icons.sort),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.sort),
+            onPressed: () {
+              viewModel.onEvent(const ToggleOrderSection());
+            },
+          ),
         ],
         elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: ListView(children: [
-          OrderSection(
-            noteOrder: state.noteOrder,
-            onOrderChanged: (NoteOrder noteOrder) {
-              viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
-            },
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: state.isOrderSectionVisible
+                ? OrderSection(
+                    noteOrder: state.noteOrder,
+                    onOrderChanged: (NoteOrder noteOrder) {
+                      viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
+                    },
+                  )
+                : Container(),
           ),
           ...state.notes
               .map((note) => GestureDetector(
